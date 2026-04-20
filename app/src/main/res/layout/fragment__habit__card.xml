@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="10dp"
+    android:layout_marginTop="25dp"
+    android:layout_marginRight="10dp"
+    tools:context=".Fragment_Habit_Card">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/deskripsiTxt"
+            android:layout_width="150dp"
+            android:layout_height="35dp"
+            android:text="Deskripsiiiiiiii" />
+
+        <TextView
+            android:id="@+id/statusTxt"
+            android:layout_width="85dp"
+            android:layout_height="wrap_content"
+            android:background="#EDE2E2"
+            android:elevation="20dp"
+            android:text="In Progress"
+            android:textAlignment="center" />
+
+        <TextView
+            android:id="@+id/namaTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nama Habit"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/progressTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="3/8 Glasses" />
+
+        <ProgressBar
+            android:id="@+id/progressBar_Habit"
+            android:layout_width="375dp"
+            android:layout_height="12dp" />
+
+        <Button
+            android:id="@+id/btn_Add"
+            android:layout_width="55dp"
+            android:layout_height="wrap_content"
+            android:text="+" />
+
+        <Button
+            android:id="@+id/btn_reduce"
+            android:layout_width="55dp"
+            android:layout_height="wrap_content"
+            android:text="-"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Progress" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="52dp"
+            android:src="@drawable/ic_launcher_foreground"
+            app:layout_constraintTop_toBottomOf="@+id/btn_Add"
+            tools:layout_editor_absoluteX="106dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>
