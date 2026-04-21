@@ -2,8 +2,8 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_width="390dp"
+    android:layout_height="210dp"
     android:layout_marginLeft="10dp"
     android:layout_marginTop="25dp"
     android:layout_marginRight="10dp"
@@ -17,63 +17,98 @@
             android:id="@+id/deskripsiTxt"
             android:layout_width="150dp"
             android:layout_height="35dp"
-            android:text="Deskripsiiiiiiii" />
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:text="Deskripsiiiiiiii"
+            app:layout_constraintStart_toEndOf="@+id/imageView"
+            app:layout_constraintTop_toBottomOf="@+id/namaTxt" />
 
         <TextView
             android:id="@+id/statusTxt"
             android:layout_width="85dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="48dp"
+            android:layout_marginTop="16dp"
             android:background="#EDE2E2"
             android:elevation="20dp"
             android:text="In Progress"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            app:layout_constraintStart_toEndOf="@+id/namaTxt"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/namaTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
             android:text="Nama Habit"
             android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/imageView"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/progressTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="3/8 Glasses" />
-
-        <ProgressBar
-            android:id="@+id/progressBar_Habit"
-            android:layout_width="375dp"
-            android:layout_height="12dp" />
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="20dp"
+            android:text="3/8 Glasses"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/deskripsiTxt" />
 
         <Button
             android:id="@+id/btn_Add"
             android:layout_width="55dp"
             android:layout_height="wrap_content"
-            android:text="+" />
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="20dp"
+            android:text="+"
+            app:layout_constraintEnd_toStartOf="@+id/btn_reduce"
+            app:layout_constraintTop_toBottomOf="@+id/progressBar_Habit" />
 
         <Button
             android:id="@+id/btn_reduce"
             android:layout_width="55dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="20dp"
             android:text="-"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/progressBar_Habit" />
 
         <TextView
             android:id="@+id/textView7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Progress" />
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="16dp"
+            android:text="Progress"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
         <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="52dp"
+            android:id="@+id/imageView"
+            android:layout_width="84dp"
+            android:layout_height="71dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="16dp"
+            android:background="#D7CFCF"
             android:src="@drawable/ic_launcher_foreground"
-            app:layout_constraintTop_toBottomOf="@+id/btn_Add"
-            tools:layout_editor_absoluteX="106dp" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ProgressBar
+            android:id="@+id/progressBar_Habit"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="1dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView7" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>
