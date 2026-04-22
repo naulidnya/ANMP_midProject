@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.nauli.anmp_uts.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_fragment_Habit_List"
+            app:destination="@id/fragment_Habit_List" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_Habit_List"
+        android:name="com.nauli.anmp_uts.Fragment_Habit_List"
+        android:label="fragment__habit__list"
+        tools:layout="@layout/fragment__habit__list" >
+        <action
+            android:id="@+id/action_fragment_Habit_List_to_fragment_MakeHabit"
+            app:destination="@id/fragment_MakeHabit" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_Habit_Card"
+        android:name="com.nauli.anmp_uts.Fragment_Habit_Card"
+        android:label="fragment__habit__card"
+        tools:layout="@layout/fragment__habit__card" />
+    <fragment
+        android:id="@+id/fragment_MakeHabit"
+        android:name="com.nauli.anmp_uts.Fragment_MakeHabit"
+        android:label="fragment__make_habit"
+        tools:layout="@layout/fragment__make_habit" />
+</navigation>
