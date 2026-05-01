@@ -7,11 +7,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.nauli.anmp_uts.databinding.ItemHabitBinding
 import com.nauli.anmp_uts.model.Habit
+import com.nauli.anmp_uts.viewmodel.HabitListViewModel
 
 class HabitListAdapter(
-    private val habitList: ArrayList<Habit>
-) : RecyclerView.Adapter<HabitListAdapter.HabitViewHolder>() {
+    private val habitList: ArrayList<Habit>,
+    private val viewmodel: HabitListViewModel
 
+) : RecyclerView.Adapter<HabitListAdapter.HabitViewHolder>() {
     class HabitViewHolder(
         val binding: ItemHabitBinding
     ) : RecyclerView.ViewHolder(binding.root)
@@ -23,43 +25,29 @@ class HabitListAdapter(
 
         val binding = ItemHabitBinding.inflate(
             LayoutInflater.from(parent.context),
-            parent,
-            false
+            parent, false
         )
-
         return HabitViewHolder(binding)
     }
-
     override fun onBindViewHolder(
         holder: HabitViewHolder,
         position: Int
     ) {
 
         val habit = habitList[position]
-
-        // ICON HABIT
         holder.binding.imgHabit.setImageResource(
             habit.icon
         )
 
-        // TITLE
         holder.binding.txtTitle.text = habit.title
-
-        // DESCRIPTION
         holder.binding.txtDescription.text = habit.description
 
-        // PROGRESS BAR
         holder.binding.progressBar.max = habit.target
         holder.binding.progressBar.progress = habit.progress
-
-        // PROGRESS NUMBER
         holder.binding.txtProgressNumber.text =
             "${habit.progress} / ${habit.target}"
 
-        // STATUS + ICON CENTANG (SESUI PPT)
         if (habit.progress >= habit.target) {
-
-            // COMPLETED
             holder.binding.txtStatus.text = "Completed"
             holder.binding.txtStatus.setTextColor(
                 Color.parseColor("#4CAF50")
@@ -71,8 +59,6 @@ class HabitListAdapter(
             )
 
         } else {
-
-            // IN PROGRESS
             holder.binding.txtStatus.text = "In Progress"
             holder.binding.txtStatus.setTextColor(
                 Color.parseColor("#6200EE")
@@ -80,8 +66,6 @@ class HabitListAdapter(
 
             holder.binding.imgStatus.visibility = View.GONE
         }
-
-        // BUTTON PLUS
         holder.binding.btnPlus.setOnClickListener {
             if (habit.progress < habit.target) {
                 habit.progress++
@@ -89,7 +73,6 @@ class HabitListAdapter(
             }
         }
 
-        // BUTTON MINUS
         holder.binding.btnMinus.setOnClickListener {
             if (habit.progress > 0) {
                 habit.progress--

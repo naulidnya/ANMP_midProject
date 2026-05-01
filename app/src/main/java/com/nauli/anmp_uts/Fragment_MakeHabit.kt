@@ -1,59 +1,75 @@
 package com.nauli.anmp_uts
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.EditText
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import com.google.android.material.textfield.TextInputLayout
+import com.nauli.anmp_uts.viewmodel.HabitListViewModel
+import kotlin.jvm.java
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [Fragment_MakeHabit.newInstance] factory method to
- * create an instance of this fragment.
- */
 class Fragment_MakeHabit : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var viewModel: HabitListViewModel
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment__make_habit, container, false)
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment Fragment_MakeHabit.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            Fragment_MakeHabit().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        viewModel = ViewModelProvider(requireActivity())
+            .get(HabitListViewModel::class.java)
+
+        val btnSave = view.findViewById<Button>(R.id.btnSave)
+
+        val habitName = view.findViewById<TextInputLayout>(R.id.habitNameTxt).editText
+        val habitDesc = view.findViewById<TextInputLayout>(R.id.habitDescTxt).editText
+        val targetHabit = view.findViewById<TextInputLayout>(R.id.habitGoalTxt).editText
+        val unitHabit = view.findViewById<TextInputLayout>(R.id.habitUnitTxt).editText
+        val spinnerHabit = view.findViewById<android.widget.Spinner>(R.id.habitComboBox)
+        val adapter = ArrayAdapter.createFromResource(
+            requireContext(),
+            R.array.icon_list,
+            android.R.layout.simple_spinner_item
+        )
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerHabit.adapter = adapter
+
+        btnSave.setOnClickListener {
+
+            var target = 0
+
+                val title = habitName?.text.toString()
+                val desc = habitDesc?.text.toString()
+                val inputTarget = targetHabit?.text.toString()
+
+                    if (inputTarget != "") {
+                    try {
+                        target = inputTarget.toInt()
+                    } catch (e: Exception) {
+                        target = 0
+                    }
                 }
+                val unit = unitHabit?.text.toString()
+                val pilihIcon = spinnerHabit.selectedItem.toString()
+
+                viewModel.TambahHabit(title, desc, target, unit, pilihIcon)
+                viewModel.simpanDataPreferences(requireContext())
+
+                findNavController().popBackStack()
             }
+        }
     }
-}

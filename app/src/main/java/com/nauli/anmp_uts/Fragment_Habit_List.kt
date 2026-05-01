@@ -16,8 +16,7 @@ import com.nauli.anmp_uts.viewmodel.HabitListViewModel
 class Fragment_Habit_List : Fragment() {
 
     private lateinit var viewModel: HabitListViewModel
-    private val habitListAdapter = HabitListAdapter(arrayListOf())
-
+    private lateinit var habitListAdapter: HabitListAdapter
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -35,11 +34,21 @@ class Fragment_Habit_List : Fragment() {
         view: View,
         savedInstanceState: Bundle?
     ) {
-
         super.onViewCreated(view, savedInstanceState)
 
         val recViewHabit =
             view.findViewById<RecyclerView>(R.id.recViewHabit)
+
+        val addButton =
+            view.findViewById<FloatingActionButton>(R.id.addButton)
+
+        viewModel = ViewModelProvider(requireActivity())
+            .get(HabitListViewModel::class.java)
+
+        viewModel.loadDataPreferences(requireContext())
+
+        habitListAdapter =
+            HabitListAdapter(arrayListOf(), viewModel)
 
         recViewHabit.layoutManager =
             LinearLayoutManager(context)
@@ -47,34 +56,17 @@ class Fragment_Habit_List : Fragment() {
         recViewHabit.adapter =
             habitListAdapter
 
-        val addButton =
-            view.findViewById<FloatingActionButton>(R.id.addButton)
-
         addButton.setOnClickListener {
-
             findNavController().navigate(
                 R.id.action_fragment_Habit_List_to_fragment_MakeHabit
             )
-
         }
-
-
-        // ViewModel
-        viewModel =
-            ViewModelProvider(this)
-                .get(HabitListViewModel::class.java)
-
-        viewModel.loadHabits()
 
         observeViewModel()
     }
 
     private fun observeViewModel() {
-
-        viewModel.habitList.observe(
-            viewLifecycleOwner
-        ) {
-
+        viewModel.habitList.observe(viewLifecycleOwner) {
             habitListAdapter.updateHabitList(it)
 
         }

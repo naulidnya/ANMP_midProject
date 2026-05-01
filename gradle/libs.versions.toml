@@ -14,6 +14,9 @@ cardview = "1.0.0"
 recyclerview = "1.4.0"
 swiperefreshlayout = "1.1.0"
 fragment = "1.8.9"
+volley = "1.2.1"
+gson = "2.10.1"
+
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -30,6 +33,9 @@ kotlinStdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version
 coroutinesCore = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines" }
 swiperefreshlayout = { module = "androidx.swiperefreshlayout:swiperefreshlayout", version.ref = "swiperefreshlayout" }
 androidx-fragment = { group = "androidx.fragment", name = "fragment", version.ref = "fragment" }
+volley = { group = "com.android.volley", name = "volley", version.ref = "volley" }
+gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
