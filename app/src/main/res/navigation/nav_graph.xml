@@ -12,10 +12,10 @@
         tools:layout="@layout/fragment_login" >
         <action
             android:id="@+id/action_loginFragment_to_fragment_Habit_List"
-            app:destination="@id/fragment_Habit_List" />
+            app:destination="@id/HabitListFragment" />
     </fragment>
     <fragment
-        android:id="@+id/fragment_Habit_List"
+        android:id="@+id/HabitListFragment"
         android:name="com.nauli.anmp_uts.Fragment_Habit_List"
         android:label="fragment__habit__list"
         tools:layout="@layout/fragment__habit__list" >

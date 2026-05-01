@@ -6,5 +6,5 @@ data class Habit(
     var progress: Int,
     val target: Int,
     val unit: String,
-    val iconResId: Int
+    val icon: Int
 )

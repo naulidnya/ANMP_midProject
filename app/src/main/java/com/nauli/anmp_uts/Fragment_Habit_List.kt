@@ -38,7 +38,6 @@ class Fragment_Habit_List : Fragment() {
 
         super.onViewCreated(view, savedInstanceState)
 
-        // RecyclerView
         val recViewHabit =
             view.findViewById<RecyclerView>(R.id.recViewHabit)
 
@@ -48,8 +47,6 @@ class Fragment_Habit_List : Fragment() {
         recViewHabit.adapter =
             habitListAdapter
 
-
-        // FloatingActionButton (Tambah Habit)
         val addButton =
             view.findViewById<FloatingActionButton>(R.id.addButton)
 

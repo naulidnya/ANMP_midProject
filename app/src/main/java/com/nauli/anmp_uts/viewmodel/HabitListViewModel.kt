@@ -13,7 +13,6 @@ class HabitListViewModel : ViewModel() {
 
         val list = arrayListOf<Habit>()
 
-        // DRINK WATER
         list.add(
             Habit(
                 title = "Drink Water",
@@ -21,11 +20,10 @@ class HabitListViewModel : ViewModel() {
                 progress = 3,
                 target = 8,
                 unit = "glasses",
-                iconResId = R.drawable.baseline_water_drop_24
+                icon = R.drawable.baseline_water_drop_24
             )
         )
 
-        // EXERCISE
         list.add(
             Habit(
                 title = "Exercise",
@@ -33,11 +31,10 @@ class HabitListViewModel : ViewModel() {
                 progress = 15,
                 target = 30,
                 unit = "minutes",
-                iconResId = R.drawable.baseline_fitness_center_24
+                icon = R.drawable.baseline_fitness_center_24
             )
         )
 
-        // READ BOOK
         list.add(
             Habit(
                 title = "Read Book",
@@ -45,11 +42,10 @@ class HabitListViewModel : ViewModel() {
                 progress = 20,
                 target = 20,
                 unit = "pages",
-                iconResId = R.drawable.baseline_menu_book_24
+                icon = R.drawable.baseline_menu_book_24
             )
         )
 
-        // MEDITATION
         list.add(
             Habit(
                 title = "Meditation",
@@ -57,7 +53,7 @@ class HabitListViewModel : ViewModel() {
                 progress = 5,
                 target = 10,
                 unit = "minutes",
-                iconResId = R.drawable.baseline_self_improvement_24
+                icon = R.drawable.baseline_self_improvement_24
             )
         )
 

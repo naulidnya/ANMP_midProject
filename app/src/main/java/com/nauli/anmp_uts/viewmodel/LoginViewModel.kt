@@ -5,15 +5,20 @@ import androidx.lifecycle.ViewModel
 
 class LoginViewModel : ViewModel() {
 
-    val loginStatus = MutableLiveData<Boolean>()
+    val loginSuksesLD = MutableLiveData<Boolean>()
+    val loginGagalLD = MutableLiveData<Boolean>()
 
     fun checkLogin(username: String, password: String) {
 
         if (username == "student" && password == "123") {
-            loginStatus.value = true
+            loginSuksesLD.value = true
         } else {
-            loginStatus.value = false
+            loginGagalLD.value = true
         }
 
+        if (username == "" || password == "") {
+            loginGagalLD.value = true
+            return
+        }
     }
 }

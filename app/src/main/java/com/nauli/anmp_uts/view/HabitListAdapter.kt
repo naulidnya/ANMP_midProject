@@ -39,7 +39,7 @@ class HabitListAdapter(
 
         // ICON HABIT
         holder.binding.imgHabit.setImageResource(
-            habit.iconResId
+            habit.icon
         )
 
         // TITLE

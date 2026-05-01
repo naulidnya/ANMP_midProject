@@ -13,9 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.nauli.anmp_uts.viewmodel.LoginViewModel
 
 class LoginFragment : Fragment() {
-
     private lateinit var viewModel: LoginViewModel
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -43,24 +41,17 @@ class LoginFragment : Fragment() {
             viewModel.checkLogin(username, password)
 
         }
-
-        viewModel.loginStatus.observe(viewLifecycleOwner) {
-
+        viewModel.loginSuksesLD.observe(viewLifecycleOwner) {
             if (it == true) {
-
-                findNavController()
-                    .navigate(R.id.action_loginFragment_to_fragment_Habit_List)
-
-            } else {
-
-                Toast.makeText(
-                    requireContext(),
-                    "Username atau password salah",
-                    Toast.LENGTH_SHORT
-                ).show()
-
+                Toast.makeText(requireContext(), "Login berhasil", Toast.LENGTH_SHORT).show()
+                findNavController().navigate(R.id.action_loginFragment_to_fragment_Habit_List)
             }
+        }
 
+        viewModel.loginGagalLD.observe(viewLifecycleOwner) {
+            if (it == true) {
+                Toast.makeText(requireContext(), "Username / Password salah", Toast.LENGTH_SHORT).show()
+            }
         }
 
     }
