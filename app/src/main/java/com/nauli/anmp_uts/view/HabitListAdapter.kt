@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.nauli.anmp_uts.databinding.FragmentHabitCardBinding
 import com.nauli.anmp_uts.databinding.ItemHabitBinding
 import com.nauli.anmp_uts.model.Habit
 import com.nauli.anmp_uts.viewmodel.HabitListViewModel
@@ -15,7 +16,7 @@ class HabitListAdapter(
 
 ) : RecyclerView.Adapter<HabitListAdapter.HabitViewHolder>() {
     class HabitViewHolder(
-        val binding: ItemHabitBinding
+        val binding: FragmentHabitCardBinding
     ) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(
@@ -23,7 +24,7 @@ class HabitListAdapter(
         viewType: Int
     ): HabitViewHolder {
 
-        val binding = ItemHabitBinding.inflate(
+        val binding = FragmentHabitCardBinding.inflate(
             LayoutInflater.from(parent.context),
             parent, false
         )
@@ -35,45 +36,53 @@ class HabitListAdapter(
     ) {
 
         val habit = habitList[position]
-        holder.binding.imgHabit.setImageResource(
+        holder.binding.imageView.setImageResource(
             habit.icon
         )
 
-        holder.binding.txtTitle.text = habit.title
-        holder.binding.txtDescription.text = habit.description
+        holder.binding.namaTxt.text = habit.title
+        holder.binding.deskripsiTxt.text = habit.description
 
-        holder.binding.progressBar.max = habit.target
-        holder.binding.progressBar.progress = habit.progress
-        holder.binding.txtProgressNumber.text =
+        holder.binding.progressBarHabit.max = habit.target
+        holder.binding.progressBarHabit.progress = habit.progress
+        holder.binding.progressTxt.text =
             "${habit.progress} / ${habit.target}"
 
         if (habit.progress >= habit.target) {
-            holder.binding.txtStatus.text = "Completed"
-            holder.binding.txtStatus.setTextColor(
+            holder.binding.statusTxt.text = "Completed"
+            holder.binding.statusTxt.setTextColor(
                 Color.parseColor("#4CAF50")
             )
 
-            holder.binding.imgStatus.visibility = View.VISIBLE
-            holder.binding.imgStatus.setColorFilter(
-                Color.parseColor("#4CAF50")
-            )
+            //disable tombol
+            holder.binding.btnAdd.isEnabled = false
+            holder.binding.btnReduce.isEnabled = false
+
+            holder.binding.btnAdd.alpha = 0.6f
+            holder.binding.btnReduce.alpha = 0.6f
 
         } else {
-            holder.binding.txtStatus.text = "In Progress"
-            holder.binding.txtStatus.setTextColor(
+            holder.binding.statusTxt.text = "In Progress"
+            holder.binding.statusTxt.setTextColor(
                 Color.parseColor("#6200EE")
             )
 
-            holder.binding.imgStatus.visibility = View.GONE
+            //enable tombol
+            holder.binding.btnAdd.isEnabled = true
+            holder.binding.btnReduce.isEnabled = true
+
+            holder.binding.btnAdd.alpha = 1f
+            holder.binding.btnReduce.alpha = 1f
+
         }
-        holder.binding.btnPlus.setOnClickListener {
+        holder.binding.btnAdd.setOnClickListener {
             if (habit.progress < habit.target) {
                 habit.progress++
                 notifyItemChanged(position)
             }
         }
 
-        holder.binding.btnMinus.setOnClickListener {
+        holder.binding.btnReduce.setOnClickListener {
             if (habit.progress > 0) {
                 habit.progress--
                 notifyItemChanged(position)
