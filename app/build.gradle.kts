@@ -1,16 +1,16 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    kotlin("kapt")
+    id("androidx.navigation.safeargs.kotlin")
+
 }
 
 android {
     namespace = "com.nauli.anmp_uts"
-    compileSdk {
-        version = release(36)
-    }
-    buildFeatures {
-        viewBinding = true
-    }
+
+    compileSdk = 36
+
     defaultConfig {
         applicationId = "com.nauli.anmp_uts"
         minSdk = 24
@@ -19,6 +19,11 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildFeatures {
+        viewBinding = true
+        dataBinding = true
     }
 
     buildTypes {
@@ -30,36 +35,44 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+
     kotlinOptions {
         jvmTarget = "11"
     }
 }
 
 dependencies {
+
+    // Core Android
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
-    implementation(libs.androidx.fragment)
     implementation(libs.material)
     implementation(libs.androidx.activity)
+    implementation(libs.androidx.fragment)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.cardview)
     implementation(libs.androidx.recyclerview)
-    implementation(libs.kotlinStdlib)
-    implementation(libs.coroutinesCore)
-    implementation("com.android.volley:volley:1.2.1")
-    implementation("com.google.code.gson:gson:2.10.1")
-    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.2.0")
+
+    // Navigation Component
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")
     implementation("androidx.navigation:navigation-ui-ktx:2.7.7")
+
+    // Coroutine
+    implementation(libs.coroutinesCore)
+
+
+    implementation("androidx.room:room-runtime:2.6.1")
+    kapt("androidx.room:room-compiler:2.6.1")
+    implementation("androidx.room:room-ktx:2.6.1")
+
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.2.0")
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    implementation(libs.volley)
-    implementation(libs.gson)
-
-
 }

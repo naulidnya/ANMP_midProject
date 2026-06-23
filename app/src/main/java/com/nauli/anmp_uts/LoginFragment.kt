@@ -13,7 +13,9 @@ import androidx.navigation.fragment.findNavController
 import com.nauli.anmp_uts.viewmodel.LoginViewModel
 
 class LoginFragment : Fragment() {
+
     private lateinit var viewModel: LoginViewModel
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -22,37 +24,75 @@ class LoginFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_login, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?
+    ) {
         super.onViewCreated(view, savedInstanceState)
 
-        val txtUsername = view.findViewById<EditText>(R.id.nameTxt)
-        val txtPassword = view.findViewById<EditText>(R.id.passwordTxt)
-        val btnLogin = view.findViewById<Button>(R.id.button_login)
+        val txtUsername =
+            view.findViewById<EditText>(R.id.nameTxt)
+
+        val txtPassword =
+            view.findViewById<EditText>(R.id.passwordTxt)
+
+        val btnLogin =
+            view.findViewById<Button>(R.id.button_login)
 
         viewModel = ViewModelProvider(this)
             .get(LoginViewModel::class.java)
 
         btnLogin.setOnClickListener {
 
-            val username = txtUsername.text.toString()
-            val password = txtPassword.text.toString()
+            val username =
+                txtUsername.text.toString().trim()
 
-            viewModel.checkLogin(username, password)
+            val password =
+                txtPassword.text.toString().trim()
 
+            if (username.isEmpty() || password.isEmpty()) {
+
+                Toast.makeText(
+                    requireContext(),
+                    "Username dan Password harus diisi",
+                    Toast.LENGTH_SHORT
+                ).show()
+
+            } else {
+
+                viewModel.checkLogin(
+                    username,
+                    password
+                )
+            }
         }
+
         viewModel.loginSuksesLD.observe(viewLifecycleOwner) {
+
             if (it == true) {
-                Toast.makeText(requireContext(), "Login berhasil", Toast.LENGTH_SHORT).show()
-                findNavController().navigate(R.id.action_loginFragment_to_fragment_Habit_List)
+
+                Toast.makeText(
+                    requireContext(),
+                    "Login berhasil",
+                    Toast.LENGTH_SHORT
+                ).show()
+
+                findNavController().navigate(
+                    R.id.action_login_to_habitList
+                )
             }
         }
 
         viewModel.loginGagalLD.observe(viewLifecycleOwner) {
+
             if (it == true) {
-                Toast.makeText(requireContext(), "Username / Password salah", Toast.LENGTH_SHORT).show()
+
+                Toast.makeText(
+                    requireContext(),
+                    "Username / Password salah",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
-
     }
 }

@@ -1,72 +1,73 @@
 package com.nauli.anmp_uts.viewmodel
 
-import android.content.Context
-import android.graphics.drawable.Icon
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.google.gson.Gson
-import com.nauli.anmp_uts.model.Habit
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.viewModelScope
 import com.nauli.anmp_uts.R
+import com.nauli.anmp_uts.model.Habit
+import com.nauli.anmp_uts.model.HabitDatabase
+import kotlinx.coroutines.launch
 
-class HabitListViewModel : ViewModel() {
+class HabitListViewModel(
+    application: Application
+) : AndroidViewModel(application) {
 
-    fun simpanDataPreferences(context: Context) {
-        val sharedPref = context.getSharedPreferences("habit_preferences", Context.MODE_PRIVATE)
-        val editor = sharedPref.edit()
+    private val habitDao =
+        HabitDatabase
+            .getInstance(application)
+            .habitDao()
 
-        val gson = Gson()
-        val json = gson.toJson(habitList.value)
+    val habitList: LiveData<List<Habit>> =
+        habitDao.getAllHabit()
 
-        editor.putString("habit_list", json)
-        editor.apply()
-    }
+    fun tambahProses(habit: Habit) {
 
-    fun loadDataPreferences(context: Context) {
-        val sharedPref = context.getSharedPreferences("habit_preferences", Context.MODE_PRIVATE)
-        val json = sharedPref.getString("habit_list", null)
-        if (json != null) {
-            val gson = Gson()
-            val type = object : com.google.gson.reflect.TypeToken<ArrayList<Habit>>() {}.type
-            val list: ArrayList<Habit> = gson.fromJson(json, type)
+        if (habit.progress < habit.target) {
 
-            habitList.value = list
+            habit.progress++
+
+            updateHabit(habit)
         }
     }
 
-    val habitList = MutableLiveData<ArrayList<Habit>>()
-    fun tambahProses(position: Int) {
-        habitList.value?.let {
-            if (it[position].progress < it[position].target) {
-                it[position].progress++
-                habitList.value = ArrayList(it)
-            }
-        }
-    }
-    fun kurangProses(position: Int) {
-        habitList.value?.let {
-            if (it[position].progress > 0) {
-                it[position].progress--
-                habitList.value = ArrayList(it)
-            }
+    fun kurangProses(habit: Habit) {
+
+        if (habit.progress > 0) {
+
+            habit.progress--
+
+            updateHabit(habit)
         }
     }
 
-    fun TambahHabit(title: String, desc: String, target: Int, unit: String, icon: String ) {
+    fun tambahHabit(
+        title: String,
+        desc: String,
+        target: Int,
+        unit: String,
+        icon: String
+    ) {
 
-        val currentList = habitList.value ?: arrayListOf()
+        val iconRes = when (icon) {
 
-        var iconRes = R.drawable.baseline_self_improvement_24
+            "Glass" ->
+                R.drawable.baseline_water_drop_24
 
-        if (icon == "Glass") {
-            iconRes = R.drawable.baseline_water_drop_24
-        } else if (icon == "Fitness") {
-            iconRes = R.drawable.baseline_fitness_center_24
-        } else if (icon == "Sleep") {
-            iconRes = R.drawable.outline_bed_24
-        } else if (icon == "Minutes") {
-            iconRes = R.drawable.minutes
-        } else if (icon == "Pages") {
-            iconRes = R.drawable.pages
+            "Fitness" ->
+                R.drawable.baseline_fitness_center_24
+
+            "Sleep" ->
+                R.drawable.outline_bed_24
+
+            "Minutes" ->
+                R.drawable.minutes
+
+            "Pages" ->
+                R.drawable.pages
+
+            else ->
+                R.drawable.baseline_self_improvement_24
         }
 
         val newHabit = Habit(
@@ -78,7 +79,21 @@ class HabitListViewModel : ViewModel() {
             icon = iconRes
         )
 
-        currentList.add(newHabit)
-        habitList.value = ArrayList(currentList)
+        viewModelScope.launch {
+
+            habitDao.insertHabit(newHabit)
+
+        }
+    }
+
+    private fun updateHabit(
+        habit: Habit
+    ) {
+
+        viewModelScope.launch {
+
+            habitDao.updateHabit(habit)
+
+        }
     }
 }
