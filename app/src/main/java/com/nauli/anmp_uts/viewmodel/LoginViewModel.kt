@@ -9,16 +9,14 @@ class LoginViewModel : ViewModel() {
     val loginGagalLD = MutableLiveData<Boolean>()
 
     fun checkLogin(username: String, password: String) {
-
+        if (username.isBlank() || password.isBlank()) {
+            loginGagalLD.value = true
+            return
+        }
         if (username == "student" && password == "123") {
             loginSuksesLD.value = true
         } else {
             loginGagalLD.value = true
-        }
-
-        if (username == "" || password == "") {
-            loginGagalLD.value = true
-            return
         }
     }
 }

@@ -1,21 +1,22 @@
 package com.nauli.anmp_uts.view
 
-import android.graphics.Color
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
-import com.nauli.anmp_uts.databinding.ItemHabitBinding
+import com.nauli.anmp_uts.R
+import com.nauli.anmp_uts.databinding.FragmentHabitCardBinding
 import com.nauli.anmp_uts.model.Habit
 import com.nauli.anmp_uts.viewmodel.HabitListViewModel
 
 class HabitListAdapter(
-    private val habitList: ArrayList<Habit>,
-    private val viewmodel: HabitListViewModel
-
+    private val viewModel: HabitListViewModel
 ) : RecyclerView.Adapter<HabitListAdapter.HabitViewHolder>() {
+
+    private var habitList = listOf<Habit>()
+
     class HabitViewHolder(
-        val binding: ItemHabitBinding
+        val binding: FragmentHabitCardBinding
     ) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(
@@ -23,71 +24,54 @@ class HabitListAdapter(
         viewType: Int
     ): HabitViewHolder {
 
-        val binding = ItemHabitBinding.inflate(
+        val binding = FragmentHabitCardBinding.inflate(
             LayoutInflater.from(parent.context),
-            parent, false
+            parent,
+            false
         )
+
         return HabitViewHolder(binding)
     }
+
     override fun onBindViewHolder(
         holder: HabitViewHolder,
         position: Int
     ) {
 
         val habit = habitList[position]
-        holder.binding.imgHabit.setImageResource(
-            habit.icon
-        )
 
-        holder.binding.txtTitle.text = habit.title
-        holder.binding.txtDescription.text = habit.description
+        holder.binding.habit = habit
 
-        holder.binding.progressBar.max = habit.target
-        holder.binding.progressBar.progress = habit.progress
-        holder.binding.txtProgressNumber.text =
-            "${habit.progress} / ${habit.target}"
+        holder.binding.namaTxt.setOnClickListener {
 
-        if (habit.progress >= habit.target) {
-            holder.binding.txtStatus.text = "Completed"
-            holder.binding.txtStatus.setTextColor(
-                Color.parseColor("#4CAF50")
-            )
+            Navigation.findNavController(it)
+                .navigate(R.id.action_editHabit)
 
-            holder.binding.imgStatus.visibility = View.VISIBLE
-            holder.binding.imgStatus.setColorFilter(
-                Color.parseColor("#4CAF50")
-            )
-
-        } else {
-            holder.binding.txtStatus.text = "In Progress"
-            holder.binding.txtStatus.setTextColor(
-                Color.parseColor("#6200EE")
-            )
-
-            holder.binding.imgStatus.visibility = View.GONE
-        }
-        holder.binding.btnPlus.setOnClickListener {
-            if (habit.progress < habit.target) {
-                habit.progress++
-                notifyItemChanged(position)
-            }
         }
 
-        holder.binding.btnMinus.setOnClickListener {
-            if (habit.progress > 0) {
-                habit.progress--
-                notifyItemChanged(position)
-            }
+        holder.binding.btnAdd.setOnClickListener {
+
+            viewModel.tambahProses(habit)
+
         }
+
+        holder.binding.btnReduce.setOnClickListener {
+
+            viewModel.kurangProses(habit)
+
+        }
+
+        holder.binding.executePendingBindings()
     }
 
     override fun getItemCount(): Int {
         return habitList.size
     }
 
-    fun updateHabitList(newHabitList: ArrayList<Habit>) {
-        habitList.clear()
-        habitList.addAll(newHabitList)
+    fun setHabitList(list: List<Habit>) {
+
+        habitList = list
+
         notifyDataSetChanged()
     }
 }

@@ -17,6 +17,7 @@ class Fragment_Habit_List : Fragment() {
 
     private lateinit var viewModel: HabitListViewModel
     private lateinit var habitListAdapter: HabitListAdapter
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -42,32 +43,41 @@ class Fragment_Habit_List : Fragment() {
         val addButton =
             view.findViewById<FloatingActionButton>(R.id.addButton)
 
-        viewModel = ViewModelProvider(requireActivity())
-            .get(HabitListViewModel::class.java)
-
-        viewModel.loadDataPreferences(requireContext())
+        viewModel = ViewModelProvider(
+            this,
+            ViewModelProvider.AndroidViewModelFactory
+                .getInstance(requireActivity().application)
+        )[HabitListViewModel::class.java]
 
         habitListAdapter =
-            HabitListAdapter(arrayListOf(), viewModel)
+            HabitListAdapter(viewModel)
 
         recViewHabit.layoutManager =
-            LinearLayoutManager(context)
+            LinearLayoutManager(requireContext())
 
         recViewHabit.adapter =
             habitListAdapter
 
         addButton.setOnClickListener {
+
             findNavController().navigate(
-                R.id.action_fragment_Habit_List_to_fragment_MakeHabit
+                R.id.action_newHabit
             )
+
         }
 
         observeViewModel()
     }
 
     private fun observeViewModel() {
-        viewModel.habitList.observe(viewLifecycleOwner) {
-            habitListAdapter.updateHabitList(it)
+
+        viewModel.habitList.observe(
+            viewLifecycleOwner
+        ) { listHabit ->
+
+            habitListAdapter.setHabitList(
+                listHabit
+            )
 
         }
     }

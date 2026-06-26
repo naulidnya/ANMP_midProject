@@ -1,19 +1,17 @@
 package com.nauli.anmp_uts
 
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Button
-import android.widget.EditText
+import android.widget.Spinner
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputLayout
 import com.nauli.anmp_uts.viewmodel.HabitListViewModel
-import kotlin.jvm.java
 
 class Fragment_MakeHabit : Fragment() {
 
@@ -23,7 +21,7 @@ class Fragment_MakeHabit : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         return inflater.inflate(R.layout.fragment__make_habit, container, false)
     }
 
@@ -39,7 +37,9 @@ class Fragment_MakeHabit : Fragment() {
         val habitDesc = view.findViewById<TextInputLayout>(R.id.habitDescTxt).editText
         val targetHabit = view.findViewById<TextInputLayout>(R.id.habitGoalTxt).editText
         val unitHabit = view.findViewById<TextInputLayout>(R.id.habitUnitTxt).editText
-        val spinnerHabit = view.findViewById<android.widget.Spinner>(R.id.habitComboBox)
+        val spinnerHabit = view.findViewById<Spinner>(R.id.habitComboBox)
+
+        // Spinner Icon
         val adapter = ArrayAdapter.createFromResource(
             requireContext(),
             R.array.icon_list,
@@ -50,26 +50,28 @@ class Fragment_MakeHabit : Fragment() {
 
         btnSave.setOnClickListener {
 
-            var target = 0
+            val title = habitName?.text.toString()
+            val desc = habitDesc?.text.toString()
+            val unit = unitHabit?.text.toString()
+            val pilihIcon = spinnerHabit.selectedItem.toString()
 
-                val title = habitName?.text.toString()
-                val desc = habitDesc?.text.toString()
-                val inputTarget = targetHabit?.text.toString()
-
-                    if (inputTarget != "") {
-                    try {
-                        target = inputTarget.toInt()
-                    } catch (e: Exception) {
-                        target = 0
-                    }
-                }
-                val unit = unitHabit?.text.toString()
-                val pilihIcon = spinnerHabit.selectedItem.toString()
-
-                viewModel.TambahHabit(title, desc, target, unit, pilihIcon)
-                viewModel.simpanDataPreferences(requireContext())
-
-                findNavController().popBackStack()
+            val target = try {
+                targetHabit?.text.toString().toInt()
+            } catch (e: Exception) {
+                0
             }
+
+            // INSERT KE ROOM
+            viewModel.tambahHabit(
+                title = title,
+                desc = desc,
+                target = target,
+                unit = unit,
+                icon = pilihIcon
+            )
+
+            // KEMBALI KE DASHBOARD
+            findNavController().popBackStack()
         }
     }
+}
