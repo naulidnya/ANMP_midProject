@@ -31,19 +31,31 @@
             android:id="@+id/action_newHabit"
             app:destination="@id/fragment_MakeHabit" />
 
-        <!-- Klik Judul Habit -->
+        <!-- Judul Habit -->
 
         <action
             android:id="@+id/action_editHabit"
-            app:destination="@id/fragment_MakeHabit" />
+            app:destination="@id/fragment_EditHabits" />
 
     </fragment>
 
-    <!-- CREATE / EDIT HABIT -->
+    <!-- CREATE HABIT -->
 
     <fragment
         android:id="@+id/fragment_MakeHabit"
         android:name="com.nauli.anmp_uts.Fragment_MakeHabit"
         tools:layout="@layout/fragment__make_habit" />
+
+    <!-- EDIT HABIT -->
+    <fragment
+        android:id="@+id/fragment_EditHabits"
+        android:name="com.nauli.anmp_uts.Fragment_EditHabits"
+        tools:layout="@layout/fragment__edit_habits">
+
+        <argument
+            android:name="habitId"
+            app:argType="integer"/>
+
+    </fragment>
 
 </navigation>

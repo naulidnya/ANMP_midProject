@@ -29,7 +29,6 @@
                 android:id="@+id/imageView"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
-                android:src="@{habit.icon}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 

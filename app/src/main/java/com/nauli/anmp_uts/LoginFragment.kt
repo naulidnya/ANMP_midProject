@@ -39,8 +39,11 @@ class LoginFragment : Fragment() {
         val btnLogin =
             view.findViewById<Button>(R.id.button_login)
 
-        viewModel = ViewModelProvider(this)
-            .get(LoginViewModel::class.java)
+        viewModel = ViewModelProvider(
+            this,
+            ViewModelProvider.AndroidViewModelFactory
+                .getInstance(requireActivity().application)
+        )[LoginViewModel::class.java]
 
         btnLogin.setOnClickListener {
 
@@ -59,7 +62,6 @@ class LoginFragment : Fragment() {
                 ).show()
 
             } else {
-
                 viewModel.checkLogin(
                     username,
                     password
@@ -82,11 +84,8 @@ class LoginFragment : Fragment() {
                 )
             }
         }
-
         viewModel.loginGagalLD.observe(viewLifecycleOwner) {
-
             if (it == true) {
-
                 Toast.makeText(
                     requireContext(),
                     "Username / Password salah",

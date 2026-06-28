@@ -1,6 +1,6 @@
 [versions]
 agp = "8.13.2"
-kotlin = "2.0.21"
+kotlin = "2.2.10"
 coreKtx = "1.18.0"
 junit = "4.13.2"
 junitVersion = "1.3.0"
@@ -16,8 +16,12 @@ swiperefreshlayout = "1.1.0"
 fragment = "1.8.9"
 volley = "1.2.1"
 gson = "2.10.1"
-navigationFragmentKtx = "2.9.8"
-navigationUiKtx = "2.9.8"
+navigationFragmentKTX = "2.5.3"
+navigationUIKTX = "2.5.3"
+roomRuntime = "2.7.2"
+roomKTX = "2.7.2"
+roomCompiler = "2.7.2"
+
 
 
 [libraries]
@@ -37,8 +41,12 @@ swiperefreshlayout = { module = "androidx.swiperefreshlayout:swiperefreshlayout"
 androidx-fragment = { group = "androidx.fragment", name = "fragment", version.ref = "fragment" }
 volley = { group = "com.android.volley", name = "volley", version.ref = "volley" }
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
-androidx-navigation-fragment-ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigationFragmentKtx" }
-androidx-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigationUiKtx" }
+navigation-fragment-ktx = { group ="androidx.navigation", name="navigation-fragment-ktx", version.ref="navigationFragmentKTX"}
+navigation-ui-ktx = { group ="androidx.navigation", name="navigation-ui-ktx", version.ref="navigationUIKTX" }
+room-runtime = { group="androidx.room", name="room-runtime", version.ref="roomRuntime" }
+room-ktx = { group="androidx.room", name="room-ktx", version.ref="roomKTX" }
+room-compiler = { group = "androidx.room", name="room-compiler", version.ref = "roomCompiler" }
+
 
 
 [plugins]

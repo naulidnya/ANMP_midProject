@@ -8,6 +8,7 @@ import com.nauli.anmp_uts.R
 import com.nauli.anmp_uts.model.Habit
 import com.nauli.anmp_uts.model.HabitDatabase
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.Dispatchers
 
 class HabitListViewModel(
     application: Application
@@ -41,6 +42,26 @@ class HabitListViewModel(
         }
     }
 
+    fun getHabit(
+        id: Int,
+        callback: (Habit) -> Unit
+    ) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val habit = habitDao.getHabit(id)
+            launch(Dispatchers.Main) {
+                callback(habit)
+            }
+        }
+    }
+
+    fun editHabit(
+        habit: Habit
+    ) {
+        viewModelScope.launch(Dispatchers.IO) {
+            habitDao.updateHabit(habit)
+        }
+    }
+
     fun tambahHabit(
         title: String,
         desc: String,
@@ -50,22 +71,16 @@ class HabitListViewModel(
     ) {
 
         val iconRes = when (icon) {
-
             "Glass" ->
                 R.drawable.baseline_water_drop_24
-
             "Fitness" ->
                 R.drawable.baseline_fitness_center_24
-
             "Sleep" ->
                 R.drawable.outline_bed_24
-
             "Minutes" ->
                 R.drawable.minutes
-
             "Pages" ->
                 R.drawable.pages
-
             else ->
                 R.drawable.baseline_self_improvement_24
         }
@@ -91,7 +106,6 @@ class HabitListViewModel(
     ) {
 
         viewModelScope.launch {
-
             habitDao.updateHabit(habit)
 
         }

@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
+import com.nauli.anmp_uts.Fragment_Habit_ListDirections
 import com.nauli.anmp_uts.R
 import com.nauli.anmp_uts.databinding.FragmentHabitCardBinding
 import com.nauli.anmp_uts.model.Habit
@@ -41,11 +42,16 @@ class HabitListAdapter(
         val habit = habitList[position]
 
         holder.binding.habit = habit
+        holder.binding.imageView.setImageResource(habit.icon)
 
         holder.binding.namaTxt.setOnClickListener {
 
+            val action =
+            Fragment_Habit_ListDirections
+                .actionEditHabit(habit.id)
+
             Navigation.findNavController(it)
-                .navigate(R.id.action_editHabit)
+                .navigate(action)
 
         }
 

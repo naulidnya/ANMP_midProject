@@ -61,7 +61,6 @@ class Fragment_MakeHabit : Fragment() {
                 0
             }
 
-            // INSERT KE ROOM
             viewModel.tambahHabit(
                 title = title,
                 desc = desc,
@@ -70,7 +69,6 @@ class Fragment_MakeHabit : Fragment() {
                 icon = pilihIcon
             )
 
-            // KEMBALI KE DASHBOARD
             findNavController().popBackStack()
         }
     }

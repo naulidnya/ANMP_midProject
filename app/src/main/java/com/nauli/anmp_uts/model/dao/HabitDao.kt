@@ -10,6 +10,9 @@ interface HabitDao {
     @Query("SELECT * FROM habit")
     fun getAllHabit(): LiveData<List<Habit>>
 
+    @Query("SELECT * FROM habit WHERE id = :id")
+    fun getHabit(id: Int): Habit
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertHabit(habit: Habit)
 
